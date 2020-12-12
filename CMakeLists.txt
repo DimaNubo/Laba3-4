@@ -1,22 +1,29 @@
-cmake_minimum_required(VERSION 2.8) #Проверка версии CMake.
+cmake_minimum_required(VERSION 2.8)
+set(PROJECT_NAME Project_Stack)
+project(${PROJECT_NAME})
 
-set(PROJECT_NAME Laborat3-4) #Создаем обычную локальную переменную с именем проекта
-project(${PROJECT_NAME}) # Название проекта
+set(MyExceptionLib MyExceptionLib)
 
-set(Queuelib Queuelib) #Переменная с именем приложения
-set(Stecklib Stecklib) #Переменная с именем библиотеки
-set(main main)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
-if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
-  set(CMAKE_BUILD_TYPE Release) #Если нет то устанавливаем Release
+set(Stack Stack)
+set(StackLib StackLib)
+set(StackTest StackTest)
+
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE)
+if(NOT CMAKE_BUILD_TYPE) 
+ set(CMAKE_BUILD_TYPE Release) 
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Queuelib ${CMAKE_CURRENT_SOURCE_DIR}/Stecklib) #Добавляем директорию "${CMAKE_CURRENT_SOURCE_DIR}/Matrixlib" в дополняемые каталоги включаемых файлов
-#${CMAKE_CURRENT_SOURCE_DIR} - стандартная переменная с адресом рабочей директории
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MyExceptionLib)
+add_subdirectory(MyExceptionLib)
 
-add_subdirectory(main) #Добавляем директорию с под-CMakeList-ом, и выполняем под-CMakeList
-add_subdirectory(Queuelib)
-add_subdirectory(Stecklib)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/StackLib)
+add_subdirectory(Stack)
+add_subdirectory(StackLib)
+add_subdirectory(StackTest)
 add_subdirectory(gtest)
-add_subdirectory(test)
+
+
+
+
